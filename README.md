@@ -75,3 +75,52 @@ Adjust origins so we can only access from `http://localhost:4200/`, `127.0.0.1:4
       end
     end
 ```
+
+## Set Up Heroku
+
+Add `rails_12factor` gem to `Gemfile`.
+
+```ruby
+gem 'rails_12factor', group: :production
+```
+
+```bash
+bundle
+```
+
+In file config/database.yml remove:
+```ruby
+production:
+  <<: *default
+  database: ember-heroku-cors-server_production
+  username: ember-heroku-cors-server
+  password: <%= ENV['EMBER-HEROKU-CORS-SERVER_DATABASE_PASSWORD'] %>
+```
+
+```bash
+heroku create ember-heroku-cors-server
+git push heroku master
+heroku run rake db:migrate
+heroku run rake db:seed
+```
+
+## CORS Fail On Heroku
+
+Attempting [this](https://stackoverflow.com/questions/18538549/cant-get-rack-cors-working-in-rails-application/20464939#20464939) fix for Heroku by moving the rack-cors configuration into `config.ru`
+
+## Notes
+
+Chances are the problems with CORS in the ember-wknd app have to do with the following:
+
+```
+### Positioning in the Middleware Stack
+
+A common issue with Rack::Cors is that incorrect positioning of Rack::Cors in the middleware stack can produce unexpected results. Here are some common middleware that Rack::Cors should be inserted before:
+
+ActionDispatch::Static if you want to serve static files. Note that this might still not work as static files are usually served from the web server (Nginx, Apache) and not the Rails container.
+Rack::Cache if your resources are going to be cached.
+**Warden::Manager if your resources are going to require authentication**
+```
+
+Some code re the above: http://kellishaver.tumblr.com/post/40758797489/cors-headers-with-devise
+```
