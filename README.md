@@ -43,3 +43,35 @@ rails-api g serializer User
 rake db:migrate
 rake db:seed
 ```
+
+## Adding CORS Support
+
+Add [rack-cors](https://github.com/cyu/rack-cors) to Gemfile.
+
+```ruby
+gem 'rack-cors', :require => 'rack/cors'
+```
+
+Configure rack-cors in `config/application.rb`
+
+```ruby
+    config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+```
+
+Restart rails server. All is well.
+
+Adjust origins so we can only access from `http://localhost:4200/`, `127.0.0.1:4200` and `http://ember-heroku-cors-client.heroku.com`.
+
+```ruby
+    config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
+      allow do
+        origins 'http://localhost:4200/', '127.0.0.1:4200', 'http://ember-heroku-cors-client.heroku.com'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+```
