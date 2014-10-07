@@ -111,6 +111,8 @@ heroku run rake db:migrate
 heroku run rake db:seed
 ```
 
+Switch to Unicorn server following instructions [here](https://devcenter.heroku.com/articles/getting-started-with-rails4#webserver).
+
 ## Notes
 
 We can check what headers are being returned using CURL, i.e. `$ curl -I -H 'Origin: *' -X GET http://ember-heroku-cors-server.herokuapp.com/users`
