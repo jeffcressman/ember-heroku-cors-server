@@ -16,12 +16,14 @@ Bundler.require(*Rails.groups)
 module EmberHerokuCorsServer
   class Application < Rails::Application
 
-    config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options]
-      end
-    end
+  	# Doesn't work with Heroku with the current app configuration (Ember Wknd app works with this configuration
+  	# but also handles fetching the CORS token differently)
+    # config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
+    #   allow do
+    #     origins '*'
+    #     resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options]
+    #   end
+    # end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

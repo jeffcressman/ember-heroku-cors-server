@@ -115,19 +115,4 @@ heroku run rake db:seed
 
 We can check what headers are being returned using CURL, i.e. `$ curl -I -H 'Origin: *' -X GET http://ember-heroku-cors-server.herokuapp.com/users`
 
-### rack-cors
-
-Chances are the problems with CORS in the ember-wknd app have to do with the following:
-
-```
-### Positioning in the Middleware Stack
-
-A common issue with Rack::Cors is that incorrect positioning of Rack::Cors in the middleware stack can produce unexpected results. Here are some common middleware that Rack::Cors should be inserted before:
-
-ActionDispatch::Static if you want to serve static files. Note that this might still not work as static files are usually served from the web server (Nginx, Apache) and not the Rails container.
-Rack::Cache if your resources are going to be cached.
-**Warden::Manager if your resources are going to require authentication**
-```
-
-Some code re the above: http://kellishaver.tumblr.com/post/40758797489/cors-headers-with-devise
-```
+The Ember Wknd demo [client](https://github.com/jeffcressman/ember-wknd) and [server](https://github.com/jeffcressman/ember-wknd-server) work with the rack-cors configuration in `config/application.rb` but in this app it only works if we put the configuration in `config.ru`.

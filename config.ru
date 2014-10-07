@@ -3,14 +3,14 @@
 require ::File.expand_path('../config/environment',  __FILE__)
 run Rails.application
 
-# require 'rack/cors'
-# use Rack::Cors do
+require 'rack/cors'
+use Rack::Cors do
 
-#   # allow all origins in development
-#   allow do
-#     origins '*'
-#     resource '*', 
-#         :headers => :any, 
-#         :methods => [:get, :post, :delete, :put, :options]
-#   end
+  # Allow all origins. Handle access with authentication.
+  allow do
+    origins '*'
+    resource '*', 
+        :headers => :any, 
+        :methods => [:get, :post, :delete, :put, :options]
+  end
 end
