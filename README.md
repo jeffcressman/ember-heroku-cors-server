@@ -1,3 +1,10 @@
+Ember Heroku Cors Server
+========================
+
+This is the API server for [this](https://github.com/jeffcressman/ember-heroku-cors-client) Ember frontend.
+
+See the frontend README for project details.
+
 ## How This Application Was Built
 
 ```bash
@@ -104,11 +111,11 @@ heroku run rake db:migrate
 heroku run rake db:seed
 ```
 
-## CORS Fail On Heroku
-
-Attempting [this](https://stackoverflow.com/questions/18538549/cant-get-rack-cors-working-in-rails-application/20464939#20464939) fix for Heroku by moving the rack-cors configuration into `config.ru`
-
 ## Notes
+
+We can check what headers are being returned using CURL, i.e. `$ curl -I -H 'Origin: *' -X GET http://ember-heroku-cors-server.herokuapp.com/users`
+
+### rack-cors
 
 Chances are the problems with CORS in the ember-wknd app have to do with the following:
 
